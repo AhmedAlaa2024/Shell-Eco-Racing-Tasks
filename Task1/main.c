@@ -38,8 +38,6 @@ int main(void)
                 GPIO_SetPinValue(PORTF, PF1, HIGH); // Turn on Red LED
                 GPIO_SetPinValue(PORTF, PF2, LOW); // Turn off Blue LED
                 GPIO_SetPinValue(PORTF, PF3, LOW); // Turn off Green LED
-
-                _delay_ms(100); // 100 ms delay to make the LEDs light visible
             }
         }
 
@@ -52,8 +50,6 @@ int main(void)
                 GPIO_SetPinValue(PORTF, PF1, LOW); // Turn off Red LED
                 GPIO_SetPinValue(PORTF, PF2, HIGH); // Turn on Blue LED
                 GPIO_SetPinValue(PORTF, PF3, LOW); // Turn off Green LED
-
-                _delay_ms(100); // 100 ms delay to make the LEDs light visible
             }
         }
 
@@ -66,9 +62,13 @@ int main(void)
                 GPIO_SetPinValue(PORTF, PF1, LOW); // Turn off Red LED
                 GPIO_SetPinValue(PORTF, PF2, LOW); // Turn off Blue LED
                 GPIO_SetPinValue(PORTF, PF3, HIGH); // Turn on Green LED
-
-                _delay_ms(100); // 100 ms delay to make the LEDs light visible
             }
+        }
+        else
+        {
+            GPIO_SetPinValue(PORTF, PF1, LOW); // Turn off Red LED
+            GPIO_SetPinValue(PORTF, PF2, LOW); // Turn off Blue LED
+            GPIO_SetPinValue(PORTF, PF3, LOW); // Turn on Green LED
         }
     }
 }

@@ -109,11 +109,12 @@ void activate_pull_up (uint8 PORTX, uint8 PINX)
 // IO Ports
 void Enable_Port(uint8 PORTX)
 {
+    SET_BIT(RCGCGPIO, PORTX);
+    uint8 delay = RCGCGPIO;
     switch(PORTX)
     {
         case PORTA:
-            SET_BIT(RCGCGPIO, PORTA);
-            GPIOA_LOCK = 0x40025000; // To unlock GPIOA_CR register
+            GPIOA_LOCK = 0x4C4F434B; // To unlock GPIOA_CR register
             GPIOA_CR |= 0x0000001F; // Allow change of some needed registers for Port A
             GPIOA_AFSEL = 0x00000000; // Select the function as Digital GPIO
             GPIOA_PCTL = 0x00000000; // Select the function as GPIO
@@ -121,8 +122,7 @@ void Enable_Port(uint8 PORTX)
             GPIOA_DEN = 0x000000FF; // Enable the digital signal to pass
             break;
         case PORTB:
-            SET_BIT(RCGCGPIO, PORTB);
-            GPIOB_LOCK = 0x40025000; // To unlock GPIOB_CR register
+            GPIOB_LOCK = 0x4C4F434B; // To unlock GPIOB_CR register
             GPIOB_CR |= 0x0000001F; // Allow change of some needed registers for Port B
             GPIOB_AFSEL = 0x00000000; // Select the function as Digital GPIO
             GPIOB_PCTL = 0x00000000; // Select the function as GPIO
@@ -130,8 +130,7 @@ void Enable_Port(uint8 PORTX)
             GPIOB_DEN = 0x000000FF; // Enable the digital signal to pass
             break;
         case PORTC:
-            SET_BIT(RCGCGPIO, PORTC);
-            GPIOC_LOCK = 0x40025000; // To unlock GPIOC_CR register
+            GPIOC_LOCK = 0x4C4F434B; // To unlock GPIOC_CR register
             GPIOC_CR |= 0x0000001F; // Allow change of some needed registers for Port C
             GPIOC_AFSEL = 0x00000000; // Select the function as Digital GPIO
             GPIOC_PCTL = 0x00000000; // Select the function as GPIO
@@ -139,8 +138,7 @@ void Enable_Port(uint8 PORTX)
             GPIOC_DEN = 0x000000FF; // Enable the digital signal to pass
             break;
         case PORTD:
-            SET_BIT(RCGCGPIO, PORTD);
-            GPIOD_LOCK = 0x40025000; // To unlock GPIOD_CR register
+            GPIOD_LOCK = 0x4C4F434B; // To unlock GPIOD_CR register
             GPIOD_CR |= 0x0000001F; // Allow change of some needed registers for Port D
             GPIOD_AFSEL = 0x00000000; // Disable Alternative Functions
             GPIOD_PCTL = 0x00000000; // Select the function as Digital GPIO
@@ -148,8 +146,7 @@ void Enable_Port(uint8 PORTX)
             GPIOD_DEN = 0x000000FF; // Enable the digital signal to pass
             break;
         case PORTE:
-            SET_BIT(RCGCGPIO, PORTE);
-            GPIOE_LOCK = 0x40025000; // To unlock GPIOE_CR register
+            GPIOE_LOCK = 0x4C4F434B; // To unlock GPIOE_CR register
             GPIOE_CR |= 0x0000001F; // Allow change of some needed registers for Port E
             GPIOE_AFSEL = 0x00000000; // Disable Alternative Functions
             GPIOE_PCTL = 0x00000000; // Select the function as Digital GPIO
@@ -157,8 +154,7 @@ void Enable_Port(uint8 PORTX)
             GPIOE_DEN = 0x0000003F; // Enable the digital signal to pass
             break;
         case PORTF:
-            SET_BIT(RCGCGPIO, PORTF);
-            GPIOF_LOCK = 0x40025000; // To unlock GPIOF_CR register
+            GPIOF_LOCK = 0x4C4F434B; // To unlock GPIOF_CR register
             GPIOF_CR |= 0x0000001F; // Allow change of some needed registers for Port F
             GPIOF_AFSEL = 0x00000000; // Disable Alternative Functions
             GPIOF_PCTL = 0x00000000; // Select the function as Digital GPIO
@@ -166,8 +162,6 @@ void Enable_Port(uint8 PORTX)
             GPIOF_DEN = 0x0000001F; // Enable the digital signal to pass
             break;
     }
-
-    uint8 delay = RCGCGPIO;
 }
 
 
