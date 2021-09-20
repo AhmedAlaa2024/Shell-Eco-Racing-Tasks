@@ -19,8 +19,7 @@
 
 extern uint8_t FAIL_RESPONSE;
 
-void comm_task1(void* pvParameters);
-void comm_task2(void* pvParameters);
+void comm_task(void* pvParameters);
 void action_task1(void* pvParameters);
 void action_task2(void* pvParameters);
 void action_task3(void* pvParameters);

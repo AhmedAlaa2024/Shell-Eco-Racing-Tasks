@@ -16,36 +16,35 @@ extern TaskHandle_t action_handler1;
 extern TaskHandle_t action_handler2;
 extern TaskHandle_t action_handler3;
 
-void comm_task1(void* pvParameters)
-{
-    send_str((char*)pvParameters);
-}
+extern void test(void);
 
-
-void comm_task2(void* pvParameters)
+void comm_task(void* pvParameters)
 {
-    char** local_response = &(((COMM_BACKAGE*)pvParameters)->response);
+    char response;
     do{
-        if(FAIL_RESPONSE == 1)
-            send_str(((COMM_BACKAGE*)pvParameters)->message);
-        **local_response = receive_char();
+        if(FAIL_RESPONSE == 0)
+            send_str("Please, Enter R, B, or G character:\n\r");
+        else
+            send_str("Error! Please, Enter R, B, or G character:\n\r");
+        response = receive_char();
         FAIL_RESPONSE = 1;
-    } while((**local_response != 'R') && (**local_response != 'r')\
-            && (**local_response != 'B') && (**local_response != 'b')\
-            && (**local_response != 'G') && (**local_response != 'g'));
+    } while((response != 'R') && (response != 'r')\
+            && (response != 'B') && (response != 'b')\
+            && (response != 'G') && (response != 'g'));
 
     FAIL_RESPONSE = 0;
-    if ((**local_response == 'r') || (**local_response == 'R'))
+
+    if ((response == 'r') || (response == 'R'))
     {
         vTaskResume(action_handler1);
         vTaskSuspend(action_handler2);
         vTaskSuspend(action_handler3);
-    } else if ((**local_response == 'b') || (**local_response == 'B'))
+    } else if ((response == 'b') || (response == 'B'))
     {
         vTaskSuspend(action_handler1);
         vTaskResume(action_handler2);
         vTaskSuspend(action_handler3);
-    } else if ((**local_response == 'b') || (**local_response == 'B'))
+    } else if ((response == 'b') || (response == 'B'))
     {
         vTaskSuspend(action_handler1);
         vTaskSuspend(action_handler2);
@@ -62,12 +61,12 @@ void action_task1(void* pvParameters)
 
 void action_task2(void* pvParameters)
 {
-    GPIOPinWrite(GPIO_PORTF_BASE, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3) , 0x04);
+    GPIOPinWrite(GPIO_PORTF_BASE, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3) , 0x0);
 }
 
 
 void action_task3(void* pvParameters)
 {
-    GPIOPinWrite(GPIO_PORTF_BASE, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3) , 0x08);
+   GPIOPinWrite(GPIO_PORTF_BASE, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3) , 0x08);
 }
 

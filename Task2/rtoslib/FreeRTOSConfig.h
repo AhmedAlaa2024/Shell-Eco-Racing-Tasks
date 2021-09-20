@@ -1,17 +1,14 @@
-/*
- * FreeRTOSConfig.h
- *
- *  Created on: Sep 19, 2021
- *  Author: ahmed
- */
+#ifndef FREERTOS_CONFIG_H
+#define FREERTOS_CONFIG_H
 
-#ifndef RTOSLIB_FREERTOSCONFIG_H_
-#define RTOSLIB_FREERTOSCONFIG_H_
+/* Here is a good place to include header files that are required across
+your application. */
+
 
 #define configUSE_PREEMPTION                    1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
 #define configUSE_TICKLESS_IDLE                 0
-#define configCPU_CLOCK_HZ                      80000000
+#define configCPU_CLOCK_HZ                      1000000
 #define configTICK_RATE_HZ                      1000
 #define configMAX_PRIORITIES                    5
 #define configMINIMAL_STACK_SIZE                128
@@ -88,4 +85,6 @@
 #define INCLUDE_xTaskGetHandle                  1
 #define INCLUDE_xTaskResumeFromISR              1
 
-#endif /* RTOSLIB_FREERTOSCONFIG_H_ */
+/* A header file that defines trace macro can be included here. */
+
+#endif /* FREERTOS_CONFIG_H */
