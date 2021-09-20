@@ -29,6 +29,10 @@ extern char response;
 COMM_BACKAGE comm_task1_backage = {"Please, Enter R, B, or G character:\n\r"};
 COMM_BACKAGE comm_task2_backage = {"Error! Please, Enter R, B, or G character:\n\r"};
 
+/* FreeRTOS Handlers */
+TaskHandle_t comm_handler1, comm_handler2;
+TaskHandle_t action_handler1, action_handler2, action_handler3;
+
 /* Function used to test if some code is running */
 /*
 void test(void)
@@ -47,11 +51,10 @@ int main(void)
     GPIOF_INIT();
 
     /* RTOS Configurations */
-    TaskHandle_t comm_handler1, comm_handler2;
+
     xTaskCreate(comm_task1, "UART0-COM3_Transmitting", FIRST_STACK, (void*)&comm_task1_backage, 2, &comm_handler1);
     xTaskCreate(comm_task2, "UART0-COM3_Receiving", FIRST_STACK, (void*)&comm_task2_backage, 2, &comm_handler2);
 
-    TaskHandle_t action_handler1, action_handler2, action_handler3;
     xTaskCreate(action_task1, "RED_LED_TURN_ON", SECOND_STACK, NULL, 1, &action_handler1);
     xTaskCreate(action_task2, "BLUE_LED_TURN_ON", SECOND_STACK, NULL, 1, &action_handler2);
     xTaskCreate(action_task3, "GREEN_LED_TURN_ON", SECOND_STACK, NULL, 1, &action_handler3);
