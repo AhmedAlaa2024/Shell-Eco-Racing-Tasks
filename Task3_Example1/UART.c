@@ -48,6 +48,22 @@ void send_str(char str[])
 }
 
 
+void send_int(uint8_t number)
+{
+    UARTCharPut(UART0_BASE, (char)number);
+}
+
+
+void make_newline(void)
+{
+    // Send Carriage Return Character
+    UARTCharPut(UART0_BASE, '\n');
+
+    // Send Line Feed Character
+    UARTCharPut(UART0_BASE, '\r');
+}
+
+
 char receive_char(void)
 {
     char response;

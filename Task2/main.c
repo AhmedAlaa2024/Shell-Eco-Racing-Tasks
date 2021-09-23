@@ -31,15 +31,6 @@ char response;
 TaskHandle_t comm_handler;
 TaskHandle_t action_handler;
 
-/* Function used to test if some code is running */
-void test(void)
-{
-    GPIOPinWrite(GPIO_PORTF_BASE, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3) , 0x02);
-    SysCtlDelay(16000000u / 3u);
-    GPIOPinWrite(GPIO_PORTF_BASE, (GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3) , 0x00);
-    SysCtlDelay(16000000u / 3u);
-}
-
 int main(void)
 {
     UART0_INIT();

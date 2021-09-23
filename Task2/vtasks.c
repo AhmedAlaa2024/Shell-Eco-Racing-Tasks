@@ -17,8 +17,6 @@
 extern TaskHandle_t action_handler;
 char response;
 
-extern void test(void);
-
 void comm_task(void* pvParameters)
 {
     while(FOREVER)
