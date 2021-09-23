@@ -25,11 +25,11 @@
 #define ACTION_STACK 200
 
 /* Global Variables */
-// char** request_messages = {"Please, Enter R, B, or G character:\n\r", "Error! Please, Enter R, B, or G character:\n\r"};
+char response;
 
 /* FreeRTOS Handlers */
 TaskHandle_t comm_handler;
-TaskHandle_t action_handler1, action_handler2, action_handler3;
+TaskHandle_t action_handler;
 
 /* Function used to test if some code is running */
 void test(void)
@@ -42,20 +42,16 @@ void test(void)
 
 int main(void)
 {
-    /* Setup Configurations */
-    PLL_Set80();
     UART0_INIT();
     GPIOF_INIT();
 
-    /* RTOS Configurations */
-
     xTaskCreate(comm_task, "UART0-COM3", COMM_STACK, NULL, 2, &comm_handler);
 
-    xTaskCreate(action_task1, "RED_LED_TURN_ON", ACTION_STACK, NULL, 1, &action_handler1);
-    xTaskCreate(action_task2, "BLUE_LED_TURN_ON", ACTION_STACK, NULL, 1, &action_handler2);
-    xTaskCreate(action_task3, "GREEN_LED_TURN_ON", ACTION_STACK, NULL, 1, &action_handler3);
+    xTaskCreate(action_task, "RED_LED_TURN_ON", ACTION_STACK, NULL, 1, &action_handler);
+
 
     vTaskStartScheduler();
+
     /* Super Loop */
     while(FOREVER);
 }
