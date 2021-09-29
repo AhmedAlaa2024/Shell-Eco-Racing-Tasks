@@ -59,7 +59,7 @@ void vTask2_action(void* pvParameter)
             send_str(current_color);
             send_newline();
         }
-        GPIOPinWrite(GPIO_PORTF_BASE, led_color, 1);
+        GPIOPinWrite(GPIO_PORTF_BASE, led_color, led_color);
         vTaskDelay(50);
         GPIOPinWrite(GPIO_PORTF_BASE, led_color, 0);
         vTaskDelay(50);
