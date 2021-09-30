@@ -23,7 +23,9 @@ void vTask1_Comm(void* pvParameter)
 
     uint8_t i = 0, led_color = RED, flag_low = 1; // Working on falling edge
     char* current_color = "RED";
+
     volatile uint32_t data;
+
     while(1)
     {
         data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0);
