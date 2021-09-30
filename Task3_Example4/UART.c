@@ -48,9 +48,26 @@ void send_str(char str[])
 }
 
 
-void send_int(uint8_t number)
+void send_int(uint32_t number)
 {
-    UARTCharPut(UART0_BASE, (char)number);
+    char c[10] = {0} ;
+    char m;
+    int i = 0 ;
+
+    if(number == 0)
+    {
+        c[0] = 48;
+        i = 0 ;
+    }
+    while(number)
+    {
+        m = (char)(number%10);
+        c[i++] = m + 48;
+        number = number/10;
+    }
+
+    while(i != -1)
+        UARTCharPut(UART0_BASE, c[i--]);
 }
 
 

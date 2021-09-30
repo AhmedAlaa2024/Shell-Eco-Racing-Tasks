@@ -24,7 +24,7 @@
 
 void UART0_INIT(void);
 void send_str(char str[]);
-void send_int(uint8_t number);
+void send_int(uint32_t number);
 void send_newline(void);
 char receive_char(void);
 

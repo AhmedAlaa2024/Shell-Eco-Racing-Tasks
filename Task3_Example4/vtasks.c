@@ -17,13 +17,14 @@
 
 void Add_Hydrogen(void* pvParameter)
 {
+    uint8_t flag_low = 1;
+    uint32_t data;
     Hydrogen = 0;
     while (FOREVER)
     {
-        send_str("Here is Add_Hydrogen Task!\n\r");
-        xSemaphoreTake(Mutex1, (TickType_t)0);
-
-        if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0))
+        xSemaphoreTake(Mutex1, (TickType_t)1000);
+        data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0);
+        if ((data == 0) && (flag_low == 1))
         {
             Hydrogen++;
 
@@ -34,20 +35,21 @@ void Add_Hydrogen(void* pvParameter)
             send_newline();
         }
         xSemaphoreGive(Mutex1);
-        vTaskDelay(1);
+        vTaskDelay(1000);
     }
 }
 
 
 void Add_Oxygen(void* pvParameter)
 {
+    uint8_t flag_low = 1;
+    uint32_t data;
     Oxygen = 0;
     while (FOREVER)
     {
-        send_str("Here is Add_Oxygen Task!\n\r");
-        xSemaphoreTake(Mutex1, (TickType_t)0);
-
-        if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4))
+        xSemaphoreTake(Mutex1, (TickType_t)1000);
+        data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4);
+        if ((data == 0) && (flag_low == 1))
         {
                 Oxygen++;
 
@@ -58,7 +60,7 @@ void Add_Oxygen(void* pvParameter)
                 send_newline();
         }
         xSemaphoreGive(Mutex1);
-        vTaskDelay(1);
+        vTaskDelay(1000);
     }
 }
 
@@ -66,13 +68,14 @@ void Add_Oxygen(void* pvParameter)
 void Create_Water(void *pvParameters)
 {
     Mutex1 = xSemaphoreCreateMutex();
-
+    uint8_t flag_low = 1;
+    uint32_t data;
     Water = 0;
     while (FOREVER)
     {
-        send_str("Here is Create_Water Task!\n\r");
-        xSemaphoreTake(Mutex1, (TickType_t)0);
-        if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0) && GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4))
+        xSemaphoreTake(Mutex1, (TickType_t)1000);
+        data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
+        if ((data == 0) && (flag_low == 0x11))
         {
             if ((Hydrogen >= 2) && (Oxygen >= 1))
             {
@@ -97,6 +100,6 @@ void Create_Water(void *pvParameters)
             }
         }
         xSemaphoreGive(Mutex1);
-        vTaskDelay(5);
+        vTaskDelay(1000);
     }
 }
