@@ -22,24 +22,26 @@ void vTask1_Comm(void* pvParameter)
     xQueue2_colors_names = xQueueCreate(2, sizeof(char*));
     uint8_t i = 0, led_color = RED, flag_low = 1; // Working on falling edge
     char* current_color = "RED";
-    uint8_t data;
+    uint32_t data;
     while(1)
     {
         data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0);
-
         if((data == 0) && (flag_low == 1))
         {
-            send_str("Communication task is executed once!");
-            send_newline();
+            vTaskDelay(30);
 
-            led_color = colors[i];
-            current_color = color_names[i];
-            ++i;
+            data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0);
+            if((data == 0) && (flag_low == 1))
+            {
+                led_color = colors[i];
+                current_color = color_names[i];
+                ++i;
 
-            xQueueSend(xQueue1_colors, (void*)&led_color, (TickType_t)1000);
-            xQueueSend(xQueue2_colors_names, (void*)current_color, (TickType_t)1000);
+                xQueueSend(xQueue1_colors, (void*)&led_color, (TickType_t)1000);
+                xQueueSend(xQueue2_colors_names, (void*)current_color, (TickType_t)1000);
 
-            i = i % 7;
+                i = i % 7;
+            }
         }
         flag_low = data;
         vTaskDelay(100);
