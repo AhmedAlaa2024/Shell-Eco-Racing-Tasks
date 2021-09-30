@@ -7,13 +7,11 @@
 #define FOREVER 1
 #define NULL (void*)0
 #include "vtasks.h"
-#include "Types.h"
+#include "shared_resources.h"
 
 /* FreeRTOS APIs */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "shared_resources.h"
-
 
 
 void vTask1_Comm(void* pvParameter)
@@ -21,13 +19,14 @@ void vTask1_Comm(void* pvParameter)
     xQueue1_colors = xQueueCreate(2, sizeof(uint8_t));
     xQueue2_colors_names = xQueueCreate(2, sizeof(char*));
 
-    uint8_t i = 0, led_color = NONE, flag_low = 1; // Working on falling edge
-    char* current_color = "NONE";
+    uint8_t i = 0, led_color, flag_low = 1; // Working on falling edge
+    char* current_color;
 
     volatile uint32_t data;
 
     while(1)
     {
+        xSemaphoreGive(semaphore1);
         data = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0);
 
         if ((data == 0) && (flag_low == 1))
@@ -49,10 +48,13 @@ void vTask1_Comm(void* pvParameter)
 
 void vTask2_action(void* pvParameter)
 {
-    uint8_t led_color = NONE;
-    char* current_color = "NONE";
+    semaphore1 = xSemaphoreCreateBinary();
+    uint8_t led_color = 0;
+    char* current_color;
+    xSemaphoreTake(semaphore1, (TickType_t)0);
     while(1)
     {
+        xSemaphoreTake(semaphore1, (TickType_t)0);
         xQueueReceive(xQueue1_colors, &(led_color), (TickType_t)0);
         if (xQueueReceive(xQueue2_colors_names, &(current_color), (TickType_t)0))
         {
